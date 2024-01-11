@@ -16,7 +16,11 @@ module.exports = {
   },
   // pass all js files through Babel
   resolve: {
-    extensions: ["*", ".js", ".jsx"]
+    // modules: [
+    //   path.resolve(directory),
+    //   'node_modules'
+    // ],
+    extensions: ['.ts', '.js', '.jsx', '.json']
   },  
   module: {
     rules: [
