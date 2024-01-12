@@ -1,24 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import App from "./App";
 import "./App.scss";
 
-import { Resource } from "@opentelemetry/resources";
-import { WebTracerProvider } from "@opentelemetry/sdk-trace-web";
 import { ConsoleSpanExporter, SimpleSpanProcessor } from "@opentelemetry/sdk-trace-base";
-import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
 import { CollectorTraceExporter } from "@opentelemetry/exporter-collector";
 import { ZoneContextManager } from "@opentelemetry/context-zone";
 import { B3Propagator, B3InjectEncoding } from "@opentelemetry/propagator-b3";
 import { registerInstrumentations } from "@opentelemetry/instrumentation";
 import { FetchInstrumentation } from "@opentelemetry/instrumentation-fetch";
+import { provider } from "./provider";
 
-
-export const provider = new WebTracerProvider({
-    resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: "web-app",
-    }),
-  });
   
 const exporter = new CollectorTraceExporter({
     url: "/v1/traces",
@@ -46,4 +39,5 @@ registerInstrumentations({
 
 const el = document.getElementById("app");
 
-ReactDOM.render(<App />, el);
+const root = createRoot(el); 
+root.render(<App />);

@@ -102,15 +102,15 @@ services:
     container_name: NginxGateway
     networks:
       - opensearch-net
+    ports:
+      - "80:80"  
   web-app:
     build:
       context: ./web-app
       dockerfile: Dockerfile
     container_name: WebApp
     networks:
-      - opensearch-net
-    ports:
-      - "80:80"            
+      - opensearch-net 
 networks:
   opensearch-net:
 
