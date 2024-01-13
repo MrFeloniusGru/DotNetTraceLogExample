@@ -95,6 +95,13 @@ services:
       - "8082:8080"
     networks:
       - opensearch-net  
+  web-app:
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile
+    container_name: WebApp
+    networks:
+      - opensearch-net 
   nginx:
     build:
       context: ./NginxGateway
@@ -104,13 +111,11 @@ services:
       - opensearch-net
     ports:
       - "80:80"  
-  web-app:
-    build:
-      context: ./web-app
-      dockerfile: Dockerfile
-    container_name: WebApp
-    networks:
-      - opensearch-net 
+    depends_on:
+      - services-a      
+      - services-b      
+      - otel-collector      
+      - web-app     
 networks:
   opensearch-net:
 

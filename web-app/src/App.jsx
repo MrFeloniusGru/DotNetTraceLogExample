@@ -36,15 +36,14 @@ const callService = async (url, spanName) =>
 const App = () => {
   return (
     <React.Fragment>
-      <h1>Hello React</h1>
       <ul>
         <li>
           <button onClick={async () => {
             await callService("/api/servicea/a", "PathA");
-          }}>Path A</button>
+          }}>Call Path A</button>
         </li>
         <li>
-          <button onClick={() => {callService("/api/servicea/b", "PathB")}}>Path B</button>
+          <button onClick={() => {callService("/api/servicea/b", "PathB")}}>Call Path B</button>
         </li>
       </ul>
     </React.Fragment>

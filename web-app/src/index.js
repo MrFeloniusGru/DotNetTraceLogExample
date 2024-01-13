@@ -5,7 +5,7 @@ import App from "./App";
 import "./App.scss";
 
 import { ConsoleSpanExporter, SimpleSpanProcessor } from "@opentelemetry/sdk-trace-base";
-import { CollectorTraceExporter } from "@opentelemetry/exporter-collector";
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { ZoneContextManager } from "@opentelemetry/context-zone";
 import { B3Propagator, B3InjectEncoding } from "@opentelemetry/propagator-b3";
 import { registerInstrumentations } from "@opentelemetry/instrumentation";
@@ -13,12 +13,8 @@ import { FetchInstrumentation } from "@opentelemetry/instrumentation-fetch";
 import { provider } from "./provider";
 
   
-const exporter = new CollectorTraceExporter({
-    url: "/v1/traces",
-  });
-  
 provider.addSpanProcessor(new SimpleSpanProcessor(new ConsoleSpanExporter()));
-provider.addSpanProcessor(new SimpleSpanProcessor(exporter));
+provider.addSpanProcessor(new SimpleSpanProcessor(new OTLPTraceExporter({url: "/v1/traces"})));
   
 provider.register({
   contextManager: new ZoneContextManager(),
